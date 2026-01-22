@@ -12,6 +12,11 @@ button.addEventListener("click", () => {
     const li = document.createElement("li");
     li.textContent = taskText;
 
+    // interacción de tachado de elementos
+    li.addEventListener("click", () => {
+        li.classList.toggle("done");
+    });
+
     list.appendChild(li);
     input.value = "";
 });
