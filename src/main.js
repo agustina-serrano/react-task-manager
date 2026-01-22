@@ -2,6 +2,13 @@ const input = document.getElementById("task-input");
 const addButton = document.getElementById("add-task-btn");
 const list = document.getElementById("task-list");
 const clearButton = document.getElementById("clear-done-btn");
+const countDisplay = document.getElementById("task-count");
+
+// función para actualizar el contador
+function updateTaskCount() {
+    const remaining = list.querySelectorAll("li:not(.done)").length;
+    countDisplay.textContent = `${remaining} task${remaining !== 1 ? "s" : ""} remaining`;
+}
 
 // función para guardar todas las tareas en localStorage
 function saveTasks() {
@@ -37,6 +44,7 @@ function loadTasks() {
 
 // cargar tareas al iniciar página
 loadTasks();
+updateTaskCount();
 
 // botón para agregar tareas
 addButton.addEventListener("click", () => {
@@ -50,16 +58,19 @@ addButton.addEventListener("click", () => {
     li.addEventListener("click", () => {
         li.classList.toggle("done");
         saveTasks();
+        updateTaskCount();
     });
 
     list.appendChild(li);
     input.value = "";
 
     saveTasks();
+    updateTaskCount();
 });
 
 // botón para borrar tareas completadas
 clearButton.addEventListener("click", () => {
     document.querySelectorAll("#task-list .done").forEach(task => task.remove())
     saveTasks();
+    updateTaskCount();
 });
